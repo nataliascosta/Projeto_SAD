@@ -1,0 +1,104 @@
+USE Mais_Transporte
+
+CREATE TABLE TB_VIO_VIAGEM ( 
+	ID_VIOLACAO INT IDENTITY(1,1) NOT NULL PRIMARY KEY, 
+	DATA_CARGA DATETIME NOT NULL, 
+	TITULO VARCHAR(50) NULL, 
+	LOCAL_ORIGEM VARCHAR(50) NULL, 
+	LOCAL_DESTINO VARCHAR(50) NULL, 
+	VALOR_PASSAGEM NUMERIC(10,2) NULL, 
+	TOTAL_VAGAS INT NULL, 
+	DATA_PARTIDA DATETIME NULL, 
+	DATA_CHEGADA DATETIME NULL, 
+	DATA_DISPONIVEL DATE NULL, 
+	DESCRICAO VARCHAR(100) NULL, 
+	COD_STATUS INT NULL, 
+	COD_MOTORISTA INT NULL, 
+	DT_ERRO DATETIME NOT NULL, 
+	VIOLACAO VARCHAR(150) NOT NULL 
+)
+
+
+-- INSERTS DE VIOLAÇÕES
+
+DECLARE @ERRO VARCHAR(150)
+
+-- Verificar se o título da viagem é nulo ou vazio
+IF EXISTS (SELECT 1 FROM TB_VIAGEM WHERE TITULO IS NULL OR TITULO = '')
+BEGIN
+    SET @ERRO = 'Título da viagem está nulo ou vazio.'
+    INSERT INTO TB_VIO_VIAGEM (DATA_CARGA, DT_ERRO, VIOLACAO)
+    VALUES (GETDATE(), GETDATE(), @ERRO)
+END
+
+-- Verificar se o local de origem da viagem é nulo ou vazio
+IF EXISTS (SELECT 1 FROM TB_VIAGEM WHERE LOCAL_ORIGEM IS NULL OR LOCAL_ORIGEM = '')
+BEGIN
+    SET @ERRO = 'Local de origem da viagem está nulo ou vazio.'
+    INSERT INTO TB_VIO_VIAGEM (DATA_CARGA, DT_ERRO, VIOLACAO)
+    VALUES (GETDATE(), GETDATE(), @ERRO)
+END
+
+-- Verificar se o local de destino da viagem é nulo ou vazio
+IF EXISTS (SELECT 1 FROM TB_VIAGEM WHERE LOCAL_DESTINO IS NULL OR LOCAL_DESTINO = '')
+BEGIN
+    SET @ERRO = 'Local de destino da viagem está nulo ou vazio.'
+    INSERT INTO TB_VIO_VIAGEM (DATA_CARGA, DT_ERRO, VIOLACAO)
+    VALUES (GETDATE(), GETDATE(), @ERRO)
+END
+
+-- Verificar se o valor da passagem é nulo ou menor ou igual a zero
+IF EXISTS (SELECT 1 FROM TB_VIAGEM WHERE VALOR_PASSAGEM IS NULL OR VALOR_PASSAGEM <= 0)
+BEGIN
+    SET @ERRO = 'Valor da passagem é nulo ou menor ou igual a zero.'
+    INSERT INTO TB_VIO_VIAGEM (DATA_CARGA, DT_ERRO, VIOLACAO)
+    VALUES (GETDATE(), GETDATE(), @ERRO)
+END
+
+-- Verificar se a quantidade de vagas é nula ou menor ou igual a zero
+IF EXISTS (SELECT 1 FROM TB_VIAGEM WHERE TOTAL_VAGAS IS NULL OR TOTAL_VAGAS <= 0)
+BEGIN
+    SET @ERRO = 'Quantidade de vagas é nula ou menor ou igual a zero.'
+    INSERT INTO TB_VIO_VIAGEM (DATA_CARGA, DT_ERRO, VIOLACAO)
+    VALUES (GETDATE(), GETDATE(), @ERRO)
+END
+
+-- Verificar se a data de partida é nula
+IF EXISTS (SELECT 1 FROM TB_VIAGEM WHERE DATA_PARTIDA IS NULL)
+BEGIN
+    SET @ERRO = 'Data de partida está nula.'
+    INSERT INTO TB_VIO_VIAGEM (DATA_CARGA, DT_ERRO, VIOLACAO)
+    VALUES (GETDATE(), GETDATE(), @ERRO)
+END
+
+-- Verificar se a data de chegada é nula
+IF EXISTS (SELECT 1 FROM TB_VIAGEM WHERE DATA_CHEGADA IS NULL)
+BEGIN
+    SET @ERRO = 'Data de chegada está nula.'
+    INSERT INTO TB_VIO_VIAGEM (DATA_CARGA, DT_ERRO, VIOLACAO)
+    VALUES (GETDATE(), GETDATE(), @ERRO)
+END
+
+-- Verificar se a data disponível é nula
+IF EXISTS (SELECT 1 FROM TB_VIAGEM WHERE DATA_DISPONIVEL IS NULL)
+BEGIN
+    SET @ERRO = 'Data disponível está nula.'
+    INSERT INTO TB_VIO_VIAGEM (DATA_CARGA, DT_ERRO, VIOLACAO)
+    VALUES (GETDATE(), GETDATE(), @ERRO)
+END
+
+-- Verificar se o status da viagem é nulo ou vazio
+IF EXISTS (SELECT 1 FROM TB_VIAGEM WHERE STATUS IS NULL OR STATUS = '')
+BEGIN
+    SET @ERRO = 'Status da viagem está nulo ou vazio.'
+    INSERT INTO TB_VIO_VIAGEM (DATA_CARGA, DT_ERRO, VIOLACAO)
+    VALUES (GETDATE(), GETDATE(), @ERRO)
+END
+
+-- Verificar se o código do motorista é nulo ou menor ou igual a zero
+IF EXISTS (SELECT 1 FROM TB_VIAGEM WHERE COD_MOTORISTA IS NULL OR COD_MOTORISTA <= 0)
+BEGIN
+    SET @ERRO = 'Código do motorista é nulo ou menor ou igual a zero.'
+    INSERT INTO TB_VIO_VIAGEM (DATA_CARGA, DT_ERRO, VIOLACAO)
+    VALUES (GETDATE(), GETDATE(), @ERRO)
+END
